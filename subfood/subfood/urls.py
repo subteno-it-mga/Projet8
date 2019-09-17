@@ -18,8 +18,12 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls import include, url
 
+from comparate import views
+
 urlpatterns = [
+    url(r'^$',views.index),
     path('admin/', admin.site.urls),
+    path('comparate/', include('comparate.urls'))
 ]
 
 if settings.DEBUG:
