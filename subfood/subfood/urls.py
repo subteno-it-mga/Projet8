@@ -23,7 +23,8 @@ from comparate import views
 urlpatterns = [
     url(r'^$',views.index),
     path('admin/', admin.site.urls),
-    path('comparate/', include('comparate.urls'))
+    path('comparate/', include('comparate.urls')),
+    path('signup/',views.signup,name="signup"),
 ]
 
 if settings.DEBUG:
