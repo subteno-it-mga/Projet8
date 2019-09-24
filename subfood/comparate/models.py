@@ -5,11 +5,15 @@ class Categories(models.Model):
     name = models.CharField(max_length=200)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     def __str__(self):
         return self.name
 
 class Products(models.Model):
     name = models.CharField(max_length=100)
+=======
+class Products(models.Model):
+>>>>>>> Stashed changes
 =======
 class Products(models.Model):
 >>>>>>> Stashed changes
@@ -23,6 +27,7 @@ class Products(models.Model):
     origin = models.CharField(max_length=200)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     def __str__(self):
         return self.name
 
@@ -32,6 +37,11 @@ class Favorite(models.Model):
 
     def __str__(self):
         return self.users
+=======
+class Favorite(models.Model):
+    users = models.ForeignKey(User, on_delete=models.CASCADE)
+    products = models.ForeignKey(Products, on_delete=models.CASCADE)
+>>>>>>> Stashed changes
 =======
 class Favorite(models.Model):
     users = models.ForeignKey(User, on_delete=models.CASCADE)
