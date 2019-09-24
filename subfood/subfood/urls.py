@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('comparate/', include('comparate.urls')),
     path('signup/',views.signup,name="signup"),
+    path('search/',views.search,name="search"),
+    path('favorite/',views.favorite,name="favorite"),
 ]
 
 if settings.DEBUG:
