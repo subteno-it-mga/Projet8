@@ -9,6 +9,8 @@ from django.contrib.messages import get_messages
 from urllib.request import urlopen
 import json
 from django.http import JsonResponse
+from django.contrib.auth import logout
+from django.conf import settings
 
 
 def index(request):
@@ -27,6 +29,20 @@ def index(request):
     else:
         form = UserCreationForm()
     return render(request, 'index.html', {'form': form})
+
+def login_user(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    user = authenticate(username=username, password=password)
+
+    if user is not None and user.is_active:
+        login(request,user)
+        return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+    return render(request, 'index.html')
+
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect(settings.LOGOUT_REDIRECT_URL)
 
 def signup(request):
     
@@ -75,3 +91,15 @@ def search(request):
 def favorite(request):
 
     return render(request,'favorite.html')
+
+def compare(request):
+
+    product = request.POST.get('product_id')
+
+    message_test = "Le numéro du produit est %s" %(product)
+
+    context = {
+        "message_test":message_test,
+    }
+
+    return render(request, "compare.html", context)

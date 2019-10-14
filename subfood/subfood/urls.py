@@ -27,6 +27,9 @@ urlpatterns = [
     path('signup/',views.signup,name="signup"),
     path('search/',views.search,name="search"),
     path('favorite/',views.favorite,name="favorite"),
+    path('compare/',views.compare,name="compare"),
+    path('logout_user/',views.logout_user,name="logout_user"),
+    path('login_user/',views.login_user,name="login_user"),
 ]
 
 if settings.DEBUG:
