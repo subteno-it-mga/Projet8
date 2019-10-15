@@ -3,11 +3,13 @@ from django.urls import reverse
 from django.urls.exceptions import NoReverseMatch
 
 class bcolors:
+    '''
+        Class to colorize test in terminal. Green for success and red for fail.
+    '''
     OKGREEN = '\033[92m'
     WARNING = '\033[93m'
     ENDC = '\033[0m'
 
-# Create your tests here.
 class TestBasicViews(TestCase):
 
     def test_index(self):
