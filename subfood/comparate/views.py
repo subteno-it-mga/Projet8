@@ -12,12 +12,28 @@ from django.http import JsonResponse
 from django.contrib.auth import logout
 from django.conf import settings
 
+from django.views import View
+ 
+class BasicViews(View):
 
-def index(request):
-    if request.method == 'POST':
+    @staticmethod
+    def index(request):
+        form = UserCreationForm
+        return render(request, 'index.html', {'form': form})
+
+    @staticmethod
+    def favorite(request):
+        return render(request,'favorite.html')
+
+
+class UserAccount(View):
+
+    def post(self, request):
         form = UserCreationForm(request.POST)
+
         if form.is_valid():
             form.save()
+
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
@@ -25,81 +41,89 @@ def index(request):
 
             messages.add_message(request, messages.INFO, form.cleaned_data['username'])
 
-            return HttpResponseRedirect('signup')
-    else:
-        form = UserCreationForm()
-    return render(request, 'index.html', {'form': form})
+            return HttpResponseRedirect('../signup')
 
-def login_user(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    user = authenticate(username=username, password=password)
-
-    if user is not None and user.is_active:
-        login(request,user)
-        return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-    return render(request, 'index.html')
-
-def logout_user(request):
-    logout(request)
-    return HttpResponseRedirect(settings.LOGOUT_REDIRECT_URL)
-
-def signup(request):
-    
-    return render(request, 'signup.html')
-
-def search(request):
-    term = request.POST.get('search_term')
-
-    list_term = term.split(" ")
-    final_term_list = []
-
-    for item in list_term:
-        
-        if list_term[len(list_term)-1] == item:
-            final_term_list.append(item)
         else:
-            new_item ="".join(item+'%20')
-            final_term_list.append(new_item)
+            form = UserCreationForm()
+            return render(request, 'index.html', {'form': form})
 
-    final_term_string = ''.join(final_term_list)
+    @staticmethod
+    def login_user(request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
 
-    url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&action=process&json=1"%(final_term_string)
-    result = urlopen(url)
-    json_result = json.load(result)
+        if user is not None and user.is_active:
+            login(request,user)
+            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+        return render(request, 'index.html')
+    
+    @staticmethod
+    def logout_user(request):
+        logout(request)
+        return HttpResponseRedirect(settings.LOGOUT_REDIRECT_URL)
 
-    # product_title = json_result["products"][0]["product_name"]
-    # product_img = json_result["products"][0]["image_front_url"]
-    # product_salt = json_result["products"][0]["nutriments"]["salt"]
-    # product_fat = json_result["products"][0]["nutriments"]["fat"]
-    # product_nutriscore = json_result["products"][0]["nutrition_grades"]
+    @staticmethod
+    def signup(request):
+        return render(request, 'signup.html')
 
-    product = json_result["products"]
 
-    context = {
+# class OpenAPI(View):
+#     pass
 
-        # 'product_title': product_title,
-        # 'product_img' : product_img,
-        # 'product_salt': product_salt,
-        # 'product_fat': product_fat,
-        # 'product_nutriscore': product_nutriscore,
-        'products':product, 
-    }
+# class ManageDB(View):
+#     pass
 
-    return render(request, 'product.html',context)
 
-def favorite(request):
+# def search(request):
+#     term = request.POST.get('search_term')
 
-    return render(request,'favorite.html')
+#     list_term = term.split(" ")
+#     final_term_list = []
 
-def compare(request):
+#     for item in list_term:
+        
+#         if list_term[len(list_term)-1] == item:
+#             final_term_list.append(item)
+#         else:
+#             new_item ="".join(item+'%20')
+#             final_term_list.append(new_item)
 
-    product = request.POST.get('product_id')
+#     final_term_string = ''.join(final_term_list)
 
-    message_test = "Le numéro du produit est %s" %(product)
+#     url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&action=process&json=1"%(final_term_string)
+#     result = urlopen(url)
+#     json_result = json.load(result)
 
-    context = {
-        "message_test":message_test,
-    }
+#     # product_title = json_result["products"][0]["product_name"]
+#     # product_img = json_result["products"][0]["image_front_url"]
+#     # product_salt = json_result["products"][0]["nutriments"]["salt"]
+#     # product_fat = json_result["products"][0]["nutriments"]["fat"]
+#     # product_nutriscore = json_result["products"][0]["nutrition_grades"]
 
-    return render(request, "compare.html", context)
+#     product = json_result["products"]
+
+#     context = {
+
+#         # 'product_title': product_title,
+#         # 'product_img' : product_img,
+#         # 'product_salt': product_salt,
+#         # 'product_fat': product_fat,
+#         # 'product_nutriscore': product_nutriscore,
+#         'products':product, 
+#     }
+
+#     return render(request, 'product.html',context)
+
+
+# def compare(request):
+
+#     product = request.POST.get('product_id')
+
+#     message_test = "Le numéro du produit est %s" %(product)
+
+#     context = {
+#         "message_test":message_test,
+#     }
+
+#     return render(request, "compare.html", context)

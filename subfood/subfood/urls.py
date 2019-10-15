@@ -21,15 +21,16 @@ from django.conf.urls import include, url
 from comparate import views
 
 urlpatterns = [
-    url(r'^$',views.index),
+    path('',views.BasicViews.index, name="index"),
     path('admin/', admin.site.urls),
     path('comparate/', include('comparate.urls')),
-    path('signup/',views.signup,name="signup"),
-    path('search/',views.search,name="search"),
-    path('favorite/',views.favorite,name="favorite"),
-    path('compare/',views.compare,name="compare"),
-    path('logout_user/',views.logout_user,name="logout_user"),
-    path('login_user/',views.login_user,name="login_user"),
+    path('signup/',views.UserAccount.signup,name="signup"),
+    path('logout_user/',views.UserAccount.logout_user,name="logout_user"),
+    path('login_user/',views.UserAccount.login_user,name="login_user"),
+    path('user_account/', views.UserAccount.as_view(), name="user_account"),
+    # path('search/',views.search,name="search"),
+    path('favorite/',views.BasicViews.favorite,name="favorite"),
+    # path('compare/',views.compare,name="compare"),
 ]
 
 if settings.DEBUG:
