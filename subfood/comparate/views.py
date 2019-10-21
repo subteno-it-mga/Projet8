@@ -75,55 +75,55 @@ class UserAccount(View):
 #     pass
 
 
-# def search(request):
-#     term = request.POST.get('search_term')
+def search(request):
+    term = request.POST.get('search_term')
 
-#     list_term = term.split(" ")
-#     final_term_list = []
+    list_term = term.split(" ")
+    final_term_list = []
 
-#     for item in list_term:
+    for item in list_term:
         
-#         if list_term[len(list_term)-1] == item:
-#             final_term_list.append(item)
-#         else:
-#             new_item ="".join(item+'%20')
-#             final_term_list.append(new_item)
+        if list_term[len(list_term)-1] == item:
+            final_term_list.append(item)
+        else:
+            new_item ="".join(item+'%20')
+            final_term_list.append(new_item)
 
-#     final_term_string = ''.join(final_term_list)
+    final_term_string = ''.join(final_term_list)
 
-#     url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&action=process&json=1"%(final_term_string)
-#     result = urlopen(url)
-#     json_result = json.load(result)
+    url = "https://world.openfoodfacts.org/cgi/search.pl?search_terms=%s&action=process&json=1"%(final_term_string)
+    result = urlopen(url)
+    json_result = json.load(result)
 
-#     # product_title = json_result["products"][0]["product_name"]
-#     # product_img = json_result["products"][0]["image_front_url"]
-#     # product_salt = json_result["products"][0]["nutriments"]["salt"]
-#     # product_fat = json_result["products"][0]["nutriments"]["fat"]
-#     # product_nutriscore = json_result["products"][0]["nutrition_grades"]
+    # product_title = json_result["products"][0]["product_name"]
+    # product_img = json_result["products"][0]["image_front_url"]
+    # product_salt = json_result["products"][0]["nutriments"]["salt"]
+    # product_fat = json_result["products"][0]["nutriments"]["fat"]
+    # product_nutriscore = json_result["products"][0]["nutrition_grades"]
 
-#     product = json_result["products"]
+    product = json_result["products"]
 
-#     context = {
+    context = {
 
-#         # 'product_title': product_title,
-#         # 'product_img' : product_img,
-#         # 'product_salt': product_salt,
-#         # 'product_fat': product_fat,
-#         # 'product_nutriscore': product_nutriscore,
-#         'products':product, 
-#     }
+        # 'product_title': product_title,
+        # 'product_img' : product_img,
+        # 'product_salt': product_salt,
+        # 'product_fat': product_fat,
+        # 'product_nutriscore': product_nutriscore,
+        'products':product, 
+    }
 
-#     return render(request, 'product.html',context)
+    return render(request, 'product.html',context)
 
 
-# def compare(request):
+def compare(request):
 
-#     product = request.POST.get('product_id')
+    product = request.POST.get('product_id')
 
-#     message_test = "Le numéro du produit est %s" %(product)
+    message_test = "Le numéro du produit est %s" %(product)
 
-#     context = {
-#         "message_test":message_test,
-#     }
+    context = {
+        "message_test":message_test,
+    }
 
-#     return render(request, "compare.html", context)
+    return render(request, "compare.html", context)
