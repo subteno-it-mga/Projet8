@@ -28,9 +28,9 @@ urlpatterns = [
     path('logout_user/',views.UserAccount.logout_user,name="logout_user"),
     path('login_user/',views.UserAccount.login_user,name="login_user"),
     path('user_account/', views.UserAccount.as_view(), name="user_account"),
-    # path('search/',views.search,name="search"),
+    path('search/',views.search,name="search"),
     path('favorite/',views.BasicViews.favorite,name="favorite"),
-    # path('compare/',views.compare,name="compare"),
+    path('compare/',views.compare,name="compare"),
 ]
 
 if settings.DEBUG:
